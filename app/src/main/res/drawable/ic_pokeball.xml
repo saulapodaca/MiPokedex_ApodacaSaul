@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="200dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
+
+    <!-- Mitad Superior: Rojo Pokédex -->
+    <path
+        android:fillColor="@color/red"
+        android:pathData="M 100,10 A 90,90 0 0 1 190,100 L 10,100 A 90,90 0 0 1 100,10 Z" />
+
+    <!-- Mitad Inferior: Transparente (toma el amarillo de fondo) -->
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M 10,100 A 90,90 0 0 0 190,100 L 10,100 Z" />
+
+    <!-- Borde exterior negro -->
+    <path
+        android:pathData="M 100,10 A 90,90 0 1 1 99.9,10 Z"
+        android:strokeColor="#212121"
+        android:strokeWidth="10" />
+
+    <!-- Franja horizontal central negra -->
+    <path
+        android:pathData="M 10,100 L 190,100"
+        android:strokeColor="#212121"
+        android:strokeWidth="10" />
+
+    <!-- Círculo central exterior negro -->
+    <path
+        android:fillColor="#212121"
+        android:pathData="M 100,65 A 35,35 0 1 1 99.9,65 Z" />
+
+    <!-- Círculo interior hueco (transparente con borde negro) -->
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M 100,75 A 25,25 0 1 1 99.9,75 Z"
+        android:strokeColor="#212121"
+        android:strokeWidth="6" />
+
+</vector>

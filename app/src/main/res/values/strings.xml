@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">MiPokedex_ApodacaSaul</string>
+    <string name="articuno_name">Articuno</string>
+    <string name="articuno_num">#144</string>
+    <string name="snorlax_num">#143</string>
+    <string name="zapdos_num">#145</string>
+    <string name="label_height">Altura:</string>
+    <string name="label_weight">Peso:</string>
+    <string name="label_ability">Habilidad:</string>
+    <string name="articuno_height">1,77 m</string>
+    <string name="articuno_weight">55,4 kg</string>
+    <string name="articuno_ability">Presión</string>
+    <string name="articuno_type_1">Hielo</string>
+    <string name="articuno_type_2">Volador</string>
+    <string name="articuno_description">Un legendario pájaro Pokémon capaz de controlar el hielo.
+        El batir de sus alas congela el aire, por lo que dicen que hace nevar allá por donde vuela.</string>
+</resources>
