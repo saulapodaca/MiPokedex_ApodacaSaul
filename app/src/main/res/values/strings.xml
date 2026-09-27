@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">MiPokedex_Compose_ApodacaSaul</string>
+    <string name="main_pokemon_name">Marshtomp</string>
+    <string name="main_pokemon_number">#259</string>
+    <string name="prev_pokemon_number">#258</string>
+    <string name="next_pokemon_number">#260</string>
+    <string name="label_height">Altura</string>
+    <string name="label_weight">Peso</string>
+    <string name="label_ability">Habilidad</string>
+    <string name="main_pokemon_height">0,7 m</string>
+    <string name="main_pokemon_weight">28,0 kg</string>
+    <string name="main_pokemon_ability">Torrente</string>
+    <string name="main_pokemon_type_1">Agua</string>
+    <string name="main_pokemon_type_2">Tierra</string>
+    <string name="main_pokemon_description">Vive en terrenos cubiertos de lodo viscoso, lo que
+        contribuye a que sus patas se fortalezcan y se vuelvan extremadamente robustas</string>
+</resources>
