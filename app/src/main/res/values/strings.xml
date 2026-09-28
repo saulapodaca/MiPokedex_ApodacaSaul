@@ -14,4 +14,5 @@
     <string name="main_pokemon_type_2">Tierra</string>
     <string name="main_pokemon_description">Vive en terrenos cubiertos de lodo viscoso, lo que
         contribuye a que sus patas se fortalezcan y se vuelvan extremadamente robustas</string>
+    <string name="title_activity_pokedex_list">PokedexList</string>
 </resources>
