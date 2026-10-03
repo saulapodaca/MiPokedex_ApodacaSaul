@@ -10,16 +10,19 @@ import apodaca.saul.mipokedex_compose_apodacasaul.data.pokemonList
 import apodaca.saul.mipokedex_compose_apodacasaul.domain.Pokemon
 
 @Composable
-fun MenuPokedex (pokemonList: List<Pokemon>, innerPadding: PaddingValues){
+fun MenuPokedex(pokemonList: List<Pokemon>, innerPadding: PaddingValues){
     LazyColumn() {
-        items(pokemonList){ pokemon ->
+        items(pokemonList){
+                pokemon ->
             PokemonRow(pokemon)
+
         }
     }
+
 }
 
 @Preview(showBackground = true)
 @Composable
 fun previewMenuPokedex(){
-    MenuPokedex(pokemonList, innerPadding = )
+    MenuPokedex(pokemonList, PaddingValues(5.dp, 5.dp))
 }

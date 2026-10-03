@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -19,27 +20,28 @@ import androidx.compose.ui.unit.sp
 import apodaca.saul.mipokedex_compose_apodacasaul.data.bulbasaur
 import apodaca.saul.mipokedex_compose_apodacasaul.domain.Pokemon
 import apodaca.saul.mipokedex_compose_apodacasaul.ui.theme.Grass
-import org.w3c.dom.Text
 
 @Composable
 fun PokemonRow(pokemon: Pokemon){
-    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween){
+    Row(Modifier.fillMaxWidth().padding(10.dp),
+        horizontalArrangement = Arrangement.SpaceBetween){
         Image(painterResource(pokemon.image),
             contentDescription = "${pokemon.name} image",
-            Modifier.width(50.dp)
+            Modifier.width(80.dp)
                 .padding(10.dp)
         )
-        Column() {
-            Text(pokemon.name)
+        Column(Modifier.fillMaxWidth(0.70f),
+            verticalArrangement = Arrangement.spacedBy(2.dp)) {
+            Text(pokemon.name, style = MaterialTheme.typography.labelLarge)
             Text(pokemon.description, fontSize = 10.sp)
-            Row(Modifier.fillMaxWidth(0.6f), horizontalArrangement = Arrangement.SpaceBetween) {
-                Text("Height:${pokemon.height}")
-                Text("Weight:${pokemon.weight}")
+            Row(Modifier.fillMaxWidth(0.85f), horizontalArrangement = Arrangement.SpaceBetween) {
+                Text("Height: ${pokemon.height}", style = MaterialTheme.typography.labelMedium)
+                Text("Weight: ${pokemon.weight}", style = MaterialTheme.typography.labelMedium)
             }
         }
-        Text("${pokemon.number}",
-            Modifier.background(Grass, CircleShape)
-                .padding(5.dp, 2.dp))
+        Text("${pokemon.number}", modifier = Modifier
+            .background(color = Grass, shape = CircleShape)
+            .padding(horizontal = 5.dp, vertical = 2.dp))
     }
 }
 
