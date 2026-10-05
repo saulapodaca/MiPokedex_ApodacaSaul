@@ -51,12 +51,12 @@ fun PokedexGrid(pokemonList: List<Pokemon>) {
 
 @Preview(showBackground = true)
 @Composable
-fun previewMenuPokedex() {
+fun PreviewMenuPokedex() {
     MenuPokedex(pokemonList)
 }
 
 @Preview(showBackground = true)
 @Composable
-fun previewPokedexGrid() {
+fun PreviewPokedexGrid() {
     PokedexGrid(pokemonList)
 }
