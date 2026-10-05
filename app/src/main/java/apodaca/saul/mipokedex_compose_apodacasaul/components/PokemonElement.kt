@@ -3,6 +3,7 @@ package apodaca.saul.mipokedex_compose_apodacasaul.components
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -61,14 +62,16 @@ fun PokemonRow(pokemon: Pokemon) {
 }
 
 @Composable
-fun FavoritePokemon(pokemon: Pokemon) {
+fun FavoritePokemon(pokemon: Pokemon, onNavigateToDetail: (id: Int) -> Unit) {
     val colors = getColorType(pokemon.type)
     Column(
-        modifier = Modifier.padding(vertical = 15.dp),
+        modifier = Modifier
+            .padding(vertical = 15.dp)
+            .clickable(true, onClick = { onNavigateToDetail(pokemon.number as Int) }),
         verticalArrangement = Arrangement.spacedBy(10.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Box{
+        Box {
             Box(
                 modifier = Modifier
                     .border(
@@ -109,7 +112,7 @@ fun FavoritePokemon(pokemon: Pokemon) {
 }
 
 @Composable
-fun PokemonCell(pokemon: Pokemon){
+fun PokemonCell(pokemon: Pokemon) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -143,7 +146,7 @@ fun PokemonElementPreview() {
 @Preview(showBackground = true)
 @Composable
 fun PokemonFavoritePreview() {
-    FavoritePokemon(bulbasaur)
+    //FavoritePokemon(bulbasaur)
 }
 
 @Preview(showBackground = true)

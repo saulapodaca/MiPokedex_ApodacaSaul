@@ -13,8 +13,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import apodaca.saul.mipokedex_compose_apodacasaul.data.bulbasaur
+import apodaca.saul.mipokedex_compose_apodacasaul.data.getFavoritePokemons
+import apodaca.saul.mipokedex_compose_apodacasaul.utilities.getColorType
 
 @Composable
 fun NumberChip(
@@ -35,4 +39,10 @@ fun NumberChip(
             fontWeight = FontWeight.Black,
             color = colors.second)
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PreviewNumberChip() {
+    NumberChip("888", Modifier, getColorType("grass"))
 }

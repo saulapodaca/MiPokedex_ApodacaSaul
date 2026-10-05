@@ -10,13 +10,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import apodaca.saul.mipokedex_compose_apodacasaul.components.FavoritesRow
 import apodaca.saul.mipokedex_compose_apodacasaul.components.PokedexGrid
-import apodaca.saul.mipokedex_compose_apodacasaul.data.favoriteList
+import apodaca.saul.mipokedex_compose_apodacasaul.data.getFavoritePokemons
 import apodaca.saul.mipokedex_compose_apodacasaul.data.pokemonList
 
 @Composable
-fun MenuPokedexScreen(innerPadding: PaddingValues) {
+fun MenuPokedexScreen(innerPadding: PaddingValues, onNavigateToDetail: (id:Int)-> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -28,7 +29,8 @@ fun MenuPokedexScreen(innerPadding: PaddingValues) {
             style = MaterialTheme.typography.titleLarge
         )
         FavoritesRow(
-            favoriteList = favoriteList
+            favoriteList = getFavoritePokemons(),
+            onNavigateToDetail
         )
         Text(
             text = "Todos mis pokemones",
@@ -41,6 +43,6 @@ fun MenuPokedexScreen(innerPadding: PaddingValues) {
 @Preview(showBackground = true)
 @Composable
 fun MenuPokedexScreenPreview() {
-    MenuPokedexScreen(PaddingValues())
+    //MenuPokedexScreen(PaddingValues(10.dp, 15.dp))
 }
 
