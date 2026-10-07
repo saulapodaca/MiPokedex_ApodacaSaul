@@ -1,4 +1,4 @@
-package apodaca.saul.mipokedex_compose_apodacasaul.domain
+package apodaca.saul.mipokedex_compose_apodacasaul.model.domain
 
 data class Pokemon(
     val name: String,

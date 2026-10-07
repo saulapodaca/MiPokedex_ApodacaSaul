@@ -1,4 +1,4 @@
-package apodaca.saul.mipokedex_compose_apodacasaul.components
+package apodaca.saul.mipokedex_compose_apodacasaul.view.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

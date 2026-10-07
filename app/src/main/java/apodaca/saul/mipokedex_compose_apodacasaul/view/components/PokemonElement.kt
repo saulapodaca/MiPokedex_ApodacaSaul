@@ -1,4 +1,4 @@
-package apodaca.saul.mipokedex_compose_apodacasaul.components
+package apodaca.saul.mipokedex_compose_apodacasaul.view.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -23,8 +23,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import apodaca.saul.mipokedex_compose_apodacasaul.data.bulbasaur
-import apodaca.saul.mipokedex_compose_apodacasaul.domain.Pokemon
+import apodaca.saul.mipokedex_compose_apodacasaul.model.data.bulbasaur
+import apodaca.saul.mipokedex_compose_apodacasaul.model.domain.Pokemon
 import apodaca.saul.mipokedex_compose_apodacasaul.ui.theme.OffWhite
 import apodaca.saul.mipokedex_compose_apodacasaul.utilities.getColorType
 

@@ -1,4 +1,4 @@
-package apodaca.saul.mipokedex_compose_apodacasaul.screens
+package apodaca.saul.mipokedex_compose_apodacasaul.view.screens
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -11,10 +11,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import apodaca.saul.mipokedex_compose_apodacasaul.components.FavoritesRow
-import apodaca.saul.mipokedex_compose_apodacasaul.components.PokedexGrid
-import apodaca.saul.mipokedex_compose_apodacasaul.data.getFavoritePokemons
-import apodaca.saul.mipokedex_compose_apodacasaul.data.pokemonList
+import apodaca.saul.mipokedex_compose_apodacasaul.view.components.FavoritesRow
+import apodaca.saul.mipokedex_compose_apodacasaul.view.components.PokedexGrid
+import apodaca.saul.mipokedex_compose_apodacasaul.model.data.getFavoritePokemons
+import apodaca.saul.mipokedex_compose_apodacasaul.model.data.pokemonList
 
 @Composable
 fun MenuPokedexScreen(innerPadding: PaddingValues, onNavigateToDetail: (id:Int)-> Unit) {

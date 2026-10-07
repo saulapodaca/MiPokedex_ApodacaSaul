@@ -5,9 +5,9 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import apodaca.saul.mipokedex_compose_apodacasaul.data.getPokemonByNumber
-import apodaca.saul.mipokedex_compose_apodacasaul.screens.MenuPokedexScreen
-import apodaca.saul.mipokedex_compose_apodacasaul.screens.PokemonDetailScreen
+import apodaca.saul.mipokedex_compose_apodacasaul.model.data.getPokemonByNumber
+import apodaca.saul.mipokedex_compose_apodacasaul.view.screens.MenuPokedexScreen
+import apodaca.saul.mipokedex_compose_apodacasaul.view.screens.PokemonDetailScreen
 
 @Composable
 fun MyApp(innerPadding: PaddingValues) {

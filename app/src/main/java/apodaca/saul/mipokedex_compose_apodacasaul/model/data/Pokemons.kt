@@ -1,7 +1,7 @@
-package apodaca.saul.mipokedex_compose_apodacasaul.data
+package apodaca.saul.mipokedex_compose_apodacasaul.model.data
 
 import apodaca.saul.mipokedex_compose_apodacasaul.R
-import apodaca.saul.mipokedex_compose_apodacasaul.domain.Pokemon
+import apodaca.saul.mipokedex_compose_apodacasaul.model.domain.Pokemon
 
 val bulbasaur = Pokemon(
     "Bulbasaur",
