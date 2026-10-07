@@ -26,7 +26,7 @@ fun MenuPokedex(pokemonList: List<Pokemon>) {
 
 @Composable
 fun FavoritesRow(favoriteList: List<Pokemon>, onNavigateToDetail: (id:Int) -> Unit) {
-    LazyRow() {
+    LazyRow(){
         items(favoriteList) { pokemon ->
             FavoritePokemon(pokemon, onNavigateToDetail)
         }
@@ -63,5 +63,5 @@ fun PreviewPokedexGrid() {
 @Preview(showBackground = true)
 @Composable
 fun PreviewFavoriteRow() {
-    //FavoritesRow(getFavoritePokemons())
+    FavoritesRow(getFavoritePokemons(), {})
 }

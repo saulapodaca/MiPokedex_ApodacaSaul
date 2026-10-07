@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -16,8 +17,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import apodaca.saul.mipokedex_compose_apodacasaul.data.bulbasaur
-import apodaca.saul.mipokedex_compose_apodacasaul.data.getFavoritePokemons
 import apodaca.saul.mipokedex_compose_apodacasaul.utilities.getColorType
 
 @Composable
@@ -27,17 +26,18 @@ fun NumberChip(
     colors: Pair<Color, Color>
 ) {
     Row(modifier = modifier
-        .size(30.dp)
+        .size(40.dp)
         .padding(5.dp)
         .background(color = colors.first, shape = CircleShape),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(text = text,
-            fontSize = 12.sp,
+            fontSize = 15.sp,
             fontFamily = FontFamily.SansSerif,
             fontWeight = FontWeight.Black,
-            color = colors.second)
+            color = colors.second,
+            style = MaterialTheme.typography.labelSmall)
     }
 }
 

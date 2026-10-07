@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -94,14 +95,15 @@ fun FavoritePokemon(pokemon: Pokemon, onNavigateToDetail: (id: Int) -> Unit) {
                     painter = painterResource(id = pokemon.image),
                     contentDescription = "${pokemon.name} image",
                     modifier = Modifier
-                        .width(75.dp)
+                        .width(100.dp)
                         .padding(5.dp)
                 )
             }
             NumberChip(
                 text = pokemon.number.toString(),
-                modifier = Modifier.align(Alignment.BottomEnd),
-                getColorType(pokemon.type)
+                modifier = Modifier.align(Alignment.BottomEnd)
+                    .offset(5.dp, 5.dp),
+                getColorType(pokemon.type),
             )
         }
         Text(
@@ -146,7 +148,7 @@ fun PokemonElementPreview() {
 @Preview(showBackground = true)
 @Composable
 fun PokemonFavoritePreview() {
-    //FavoritePokemon(bulbasaur)
+    FavoritePokemon(bulbasaur, {})
 }
 
 @Preview(showBackground = true)

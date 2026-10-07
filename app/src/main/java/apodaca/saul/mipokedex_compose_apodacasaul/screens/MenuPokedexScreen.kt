@@ -43,6 +43,6 @@ fun MenuPokedexScreen(innerPadding: PaddingValues, onNavigateToDetail: (id:Int)-
 @Preview(showBackground = true)
 @Composable
 fun MenuPokedexScreenPreview() {
-    //MenuPokedexScreen(PaddingValues(10.dp, 15.dp))
+    MenuPokedexScreen(PaddingValues(10.dp, 15.dp), {})
 }
 

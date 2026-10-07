@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import apodaca.saul.mipokedex_compose_apodacasaul.data.getPokemonByNumber
 import apodaca.saul.mipokedex_compose_apodacasaul.screens.MenuPokedexScreen
 import apodaca.saul.mipokedex_compose_apodacasaul.screens.PokemonDetailScreen
 
@@ -18,8 +19,8 @@ fun MyApp(innerPadding: PaddingValues) {
                 onNavigateToDetail = { id -> navController.navigate(route = PokemonDetail(id)) })
         }
         composable<PokemonDetail> {
-            //val id;
-            //PokemonDetailScreen(innerPadding)
+            val pokemon = it.arguments?.getInt("pokemon") ?: -1
+            PokemonDetailScreen(innerPadding, getPokemonByNumber(pokemon))
         }
     }
 }

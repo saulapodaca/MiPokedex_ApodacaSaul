@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import apodaca.saul.mipokedex_compose_apodacasaul.components.MenuPokedex
 import apodaca.saul.mipokedex_compose_apodacasaul.data.pokemonList
-import apodaca.saul.mipokedex_compose_apodacasaul.screens.MenuPokedexScreen
+import apodaca.saul.mipokedex_compose_apodacasaul.navigation.MyApp
 import apodaca.saul.mipokedex_compose_apodacasaul.ui.theme.MiPokedex_Compose_ApodacaSaulTheme
 
 class PokedexList : ComponentActivity() {
@@ -21,9 +21,7 @@ class PokedexList : ComponentActivity() {
         setContent {
             MiPokedex_Compose_ApodacaSaulTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    MenuPokedexScreen(
-                        innerPadding
-                    )
+                    MyApp(innerPadding)
                 }
             }
         }
