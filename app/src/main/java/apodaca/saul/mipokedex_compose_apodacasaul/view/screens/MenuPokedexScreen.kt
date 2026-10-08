@@ -40,6 +40,7 @@ import apodaca.saul.mipokedex_compose_apodacasaul.view.components.MenuPokedex
 val PokemonViewModel = PokemonViewModel()
 @Composable
 fun MenuPokedexScreen(innerPadding: PaddingValues, onNavigateToDetail: (id:Int)-> Unit) {
+    //Estado que va a controlar la vista
     var grid by remember{ mutableStateOf(false)}
 
     Column(
@@ -69,6 +70,7 @@ fun MenuPokedexScreen(innerPadding: PaddingValues, onNavigateToDetail: (id:Int)-
                 text = "Todos mis pokemones",
                 style = MaterialTheme.typography.titleLarge
             )
+
             Switch(
                 checked = grid,
                 onCheckedChange = { grid = it },
@@ -99,6 +101,7 @@ fun MenuPokedexScreen(innerPadding: PaddingValues, onNavigateToDetail: (id:Int)-
         }
         Spacer(modifier = Modifier.height(8.dp))
 
+        //Este es el condicional para el render dependiendo el wwitch
         if (grid) {
             PokedexGrid(
                 pokemonList = pokemonList,

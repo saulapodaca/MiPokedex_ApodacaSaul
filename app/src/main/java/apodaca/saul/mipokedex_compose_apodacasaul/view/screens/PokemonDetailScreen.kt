@@ -49,8 +49,9 @@ import apodaca.saul.mipokedex_compose_apodacasaul.utilities.getColorType
 
 @Composable
 fun PokemonDetailScreen(innerPadding: PaddingValues, pokemon: Pokemon, onNavigateToDetail: (id:Int) -> Unit) {
-
+    //Estado que recordará si el pokemon está en favoritos
     var isFavorite by remember(pokemon.number) { mutableStateOf(pokemon.favorite) }
+    //Los pokemones previos y siguientes para completar la vista
     val prevPokemon = PokemonViewModel.getPrevPokemon(pokemon.number)
     val nextPokemon = PokemonViewModel.getNextPokemon(pokemon.number)
 
@@ -117,7 +118,7 @@ fun PokemonDetailScreen(innerPadding: PaddingValues, pokemon: Pokemon, onNavigat
                 //Es para el espacio para la imagen del pokemon
                 Spacer(modifier = Modifier.height(70.dp))
 
-                //las pastillas de los tipos TODO HAY QUE MODIFICAR ESTO PARA QUE SEA
+                //las pastillas de los tipos
                 Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                     TypePill(text = pokemon.type, getColorType(pokemon.type).first)
                 }
@@ -169,6 +170,7 @@ fun PokemonDetailScreen(innerPadding: PaddingValues, pokemon: Pokemon, onNavigat
                     .padding(bottom = 8.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
+                    //El boton previo pokemon
                     Row(
                         verticalAlignment = Alignment.Bottom,
                         modifier = Modifier
@@ -190,6 +192,7 @@ fun PokemonDetailScreen(innerPadding: PaddingValues, pokemon: Pokemon, onNavigat
                         }
                     }
 
+                    //El boton siguiente pokemon
                     Row(
                         verticalAlignment = Alignment.Bottom,
                         modifier = Modifier

@@ -96,7 +96,7 @@ fun FavoritePokemon(pokemon: Pokemon, onNavigateToDetail: (id: Int) -> Unit) {
                     painter = painterResource(id = pokemon.image),
                     contentDescription = "${pokemon.name} image",
                     modifier = Modifier
-                        .width(100.dp)
+                        .size(100.dp)
                         .padding(5.dp)
                 )
             }
