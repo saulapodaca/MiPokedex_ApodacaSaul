@@ -29,11 +29,12 @@ import apodaca.saul.mipokedex_compose_apodacasaul.ui.theme.OffWhite
 import apodaca.saul.mipokedex_compose_apodacasaul.utilities.getColorType
 
 @Composable
-fun PokemonRow(pokemon: Pokemon) {
+fun PokemonRow(pokemon: Pokemon, onNavigateToDetail: (id:Int) -> Unit) {
     Row(
         Modifier
             .fillMaxWidth()
-            .padding(10.dp),
+            .padding(10.dp)
+            .clickable(true, onClick = { onNavigateToDetail(pokemon.number as Int) }),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Image(
@@ -114,7 +115,7 @@ fun FavoritePokemon(pokemon: Pokemon, onNavigateToDetail: (id: Int) -> Unit) {
 }
 
 @Composable
-fun PokemonCell(pokemon: Pokemon) {
+fun PokemonCell(pokemon: Pokemon, onNavigateToDetail: (id:Int) -> Unit) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -125,6 +126,7 @@ fun PokemonCell(pokemon: Pokemon) {
                 modifier = Modifier
                     .size(150.dp)
                     .padding(10.dp)
+                    .clickable(true, onClick = { onNavigateToDetail(pokemon.number as Int) })
             )
             NumberChip(
                 text = pokemon.number.toString(),
@@ -142,7 +144,7 @@ fun PokemonCell(pokemon: Pokemon) {
 @Preview(showBackground = true)
 @Composable
 fun PokemonElementPreview() {
-    PokemonRow(bulbasaur)
+    PokemonRow(bulbasaur, {})
 }
 
 @Preview(showBackground = true)
@@ -154,7 +156,7 @@ fun PokemonFavoritePreview() {
 @Preview(showBackground = true)
 @Composable
 fun PokemonCellPreview() {
-    PokemonCell(bulbasaur)
+    PokemonCell(bulbasaur, {})
 }
 
 

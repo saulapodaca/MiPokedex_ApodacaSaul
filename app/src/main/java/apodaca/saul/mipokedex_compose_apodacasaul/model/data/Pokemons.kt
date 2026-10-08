@@ -127,11 +127,3 @@ val pokemonList = listOf(
         R.drawable.mimikyu
     )
 )
-
-fun getFavoritePokemons(): List<Pokemon> {
-    return pokemonList.filter { it.favorite }
-}
-
-fun getPokemonByNumber(id: Int): Pokemon{
-    return pokemonList.filter {it.number == id}.first()
-}

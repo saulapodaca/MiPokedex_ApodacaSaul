@@ -33,6 +33,6 @@ class PokedexList : ComponentActivity() {
 @Composable
 fun GreetingPreview() {
     MiPokedex_Compose_ApodacaSaulTheme {
-        MenuPokedex(pokemonList)
+        MenuPokedex(pokemonList, {})
     }
 }

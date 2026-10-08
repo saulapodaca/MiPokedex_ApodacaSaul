@@ -2,6 +2,7 @@ package apodaca.saul.mipokedex_compose_apodacasaul.view.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,8 +17,14 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -30,23 +37,27 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import apodaca.saul.mipokedex_compose_apodacasaul.PokemonDetailScreen
 import apodaca.saul.mipokedex_compose_apodacasaul.R
+import apodaca.saul.mipokedex_compose_apodacasaul.model.data.bulbasaur
 import apodaca.saul.mipokedex_compose_apodacasaul.model.domain.Pokemon
+import apodaca.saul.mipokedex_compose_apodacasaul.ui.theme.Favorite
 import apodaca.saul.mipokedex_compose_apodacasaul.ui.theme.Gray
-import apodaca.saul.mipokedex_compose_apodacasaul.ui.theme.Ground
-import apodaca.saul.mipokedex_compose_apodacasaul.ui.theme.MiPokedex_Compose_ApodacaSaulTheme
 import apodaca.saul.mipokedex_compose_apodacasaul.ui.theme.OffWhite
 import apodaca.saul.mipokedex_compose_apodacasaul.ui.theme.Red
-import apodaca.saul.mipokedex_compose_apodacasaul.ui.theme.Water
 import apodaca.saul.mipokedex_compose_apodacasaul.ui.theme.White
 import apodaca.saul.mipokedex_compose_apodacasaul.utilities.getColorType
 
 @Composable
-fun PokemonDetailScreen(innerPadding: PaddingValues, pokemon: Pokemon) {
+fun PokemonDetailScreen(innerPadding: PaddingValues, pokemon: Pokemon, onNavigateToDetail: (id:Int) -> Unit) {
+
+    var isFavorite by remember(pokemon.number) { mutableStateOf(pokemon.favorite) }
+    val prevPokemon = PokemonViewModel.getPrevPokemon(pokemon.number)
+    val nextPokemon = PokemonViewModel.getNextPokemon(pokemon.number)
+
     Box(
         modifier = Modifier
             .fillMaxSize()
+            .padding(innerPadding)
             .background(getColorType(pokemon.type).first)
     ) {
         Image(
@@ -78,11 +89,18 @@ fun PokemonDetailScreen(innerPadding: PaddingValues, pokemon: Pokemon) {
                     fontFamily = FontFamily.Serif
                 )
             }
-            Image(
-                painter = painterResource(id = R.drawable.ic_star_favorite),
-                contentDescription = "Favorito",
-                modifier = Modifier.size(40.dp)
-            )
+            IconButton(
+                onClick = {
+                    isFavorite = PokemonViewModel.toggleFavorite(pokemon.number)
+                }
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_star_favorite),
+                    tint = if (isFavorite) Favorite else Color.White.copy(alpha = 0.6f),
+                    contentDescription = if (isFavorite) "Quitar de favoritos" else "Agregar a favoritos",
+                    modifier = Modifier.size(40.dp)
+                )
+            }
         }
         Box(modifier = Modifier
             .fillMaxWidth()
@@ -101,8 +119,7 @@ fun PokemonDetailScreen(innerPadding: PaddingValues, pokemon: Pokemon) {
 
                 //las pastillas de los tipos TODO HAY QUE MODIFICAR ESTO PARA QUE SEA
                 Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                    TypePill(text = stringResource(R.string.main_pokemon_type_1), Water)
-                    TypePill(text = stringResource(R.string.main_pokemon_type_2), Ground)
+                    TypePill(text = pokemon.type, getColorType(pokemon.type).first)
                 }
 
                 Spacer(modifier = Modifier.height(20.dp))
@@ -115,17 +132,17 @@ fun PokemonDetailScreen(innerPadding: PaddingValues, pokemon: Pokemon) {
                     Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                         StatItem(
                             label = stringResource(R.string.label_height),
-                            value = stringResource(R.string.main_pokemon_height)
+                            value = pokemon.height.toString() + " m"
                         )
                         StatItem(
                             label = stringResource(R.string.label_weight),
-                            value = stringResource(R.string.main_pokemon_weight)
+                            value = pokemon.weight.toString() + " kg"
                         )
                     }
                     Column {
                         StatItem(
                             label = stringResource(R.string.label_ability),
-                            value = stringResource(R.string.main_pokemon_ability)
+                            value = pokemon.ability
                         )
                     }
                 }
@@ -134,7 +151,7 @@ fun PokemonDetailScreen(innerPadding: PaddingValues, pokemon: Pokemon) {
 
                 // Descripción
                 Text(
-                    text = stringResource(R.string.main_pokemon_description),
+                    text = pokemon.description,
                     textAlign = TextAlign.Center,
                     fontWeight = FontWeight.Bold,
                     fontSize = 25.sp,
@@ -152,35 +169,53 @@ fun PokemonDetailScreen(innerPadding: PaddingValues, pokemon: Pokemon) {
                     .padding(bottom = 8.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Row(verticalAlignment = Alignment.Bottom) {
-                        Image(
-                            painter = painterResource(id = R.drawable.ic_arrow_prev),
-                            contentDescription = "Anterior",
-                            modifier = Modifier.size(36.dp)
-                        )
-                        PokemonThumb(
-                            imageRes = R.drawable.mudkip,
-                            label = stringResource(R.string.prev_pokemon_number)
-                        )
+                    Row(
+                        verticalAlignment = Alignment.Bottom,
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(8.dp))
+                            .clickable(enabled = prevPokemon != null) {
+                                prevPokemon?.let { onNavigateToDetail(it.number.toInt()) }
+                            }
+                    ) {
+                        if (prevPokemon != null) {
+                            Image(
+                                painter = painterResource(id = R.drawable.ic_arrow_prev),
+                                contentDescription = "Anterior",
+                                modifier = Modifier.size(36.dp)
+                            )
+                            PokemonThumb(
+                                imageRes = prevPokemon.image,
+                                label = "#${prevPokemon.number}"
+                            )
+                        }
                     }
 
-                    Row(verticalAlignment = Alignment.Bottom) {
-                        PokemonThumb(
-                            imageRes = R.drawable.swampert,
-                            label = stringResource(R.string.next_pokemon_number)
-                        )
-                        Image(
-                            painter = painterResource(id = R.drawable.ic_arrow_next),
-                            contentDescription = "siguiente",
-                            modifier = Modifier.size(36.dp)
-                        )
+                    Row(
+                        verticalAlignment = Alignment.Bottom,
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(8.dp))
+                            .clickable(enabled = nextPokemon != null) {
+                                nextPokemon?.let { onNavigateToDetail(it.number.toInt()) }
+                            }
+                    ) {
+                        if (nextPokemon != null) {
+                            PokemonThumb(
+                                imageRes = nextPokemon.image,
+                                label = "#${nextPokemon.number}"
+                            )
+                            Image(
+                                painter = painterResource(id = R.drawable.ic_arrow_next),
+                                contentDescription = "Siguiente",
+                                modifier = Modifier.size(36.dp)
+                            )
+                        }
                     }
                 }
             }
         }
         Image(
-            painter = painterResource(id = R.drawable.marshtomp),
-            contentDescription = stringResource(R.string.main_pokemon_name),
+            painter = painterResource(pokemon.image),
+            contentDescription = "${pokemon.name} image",
             modifier = Modifier
                 .size(270.dp)
                 .align(Alignment.Center)
@@ -192,9 +227,7 @@ fun PokemonDetailScreen(innerPadding: PaddingValues, pokemon: Pokemon) {
 @Preview(showBackground = true)
 @Composable
 fun PokemonDetailScreenPreview() {
-    MiPokedex_Compose_ApodacaSaulTheme {
-        PokemonDetailScreen()
-    }
+    PokemonDetailScreen(PaddingValues(0.dp, 0.dp), bulbasaur, {})
 }
 
 //Es la pastilla de los tipos
@@ -232,17 +265,19 @@ private fun StatItem(label: String, value: String) {
 
 @Composable
 private fun PokemonThumb(imageRes: Int, label: String) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Image(
-            painter = painterResource(id = imageRes),
-            contentDescription = null,
-            modifier = Modifier.size(70.dp)
-        )
-        Text(
-            text = label,
-            fontSize = 12.sp,
-            color = Color.Gray,
-            fontWeight = FontWeight.Medium
-        )
+    if (imageRes != 0) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Image(
+                painter = painterResource(id = imageRes),
+                contentDescription = null,
+                modifier = Modifier.size(70.dp)
+            )
+            Text(
+                text = label,
+                fontSize = 12.sp,
+                color = Color.Gray,
+                fontWeight = FontWeight.Medium
+            )
+        }
     }
 }

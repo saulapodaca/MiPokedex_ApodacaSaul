@@ -11,15 +11,15 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import apodaca.saul.mipokedex_compose_apodacasaul.model.data.getFavoritePokemons
-import apodaca.saul.mipokedex_compose_apodacasaul.model.data.pokemonList
 import apodaca.saul.mipokedex_compose_apodacasaul.model.domain.Pokemon
+import apodaca.saul.mipokedex_compose_apodacasaul.viewmodel.PokemonViewModel
 
+val PokemonViewModel = PokemonViewModel()
 @Composable
-fun MenuPokedex(pokemonList: List<Pokemon>) {
+fun MenuPokedex(pokemonList: List<Pokemon>, onNavigateToDetail: (id:Int) -> Unit) {
     LazyColumn() {
         items(pokemonList) { pokemon ->
-            PokemonRow(pokemon)
+            PokemonRow(pokemon, onNavigateToDetail)
         }
     }
 }
@@ -34,7 +34,7 @@ fun FavoritesRow(favoriteList: List<Pokemon>, onNavigateToDetail: (id:Int) -> Un
 }
 
 @Composable
-fun PokedexGrid(pokemonList: List<Pokemon>) {
+fun PokedexGrid(pokemonList: List<Pokemon>, onNavigateToDetail: (id:Int) -> Unit) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(3),
         contentPadding = PaddingValues(horizontal = 5.dp, vertical = 20.dp),
@@ -43,7 +43,7 @@ fun PokedexGrid(pokemonList: List<Pokemon>) {
     ) {
         items(pokemonList){
             pokemon ->
-            PokemonCell(pokemon)
+            PokemonCell(pokemon, onNavigateToDetail)
         }
     }
 }
@@ -51,17 +51,17 @@ fun PokedexGrid(pokemonList: List<Pokemon>) {
 @Preview(showBackground = true)
 @Composable
 fun PreviewMenuPokedex() {
-    MenuPokedex(pokemonList)
+    MenuPokedex(PokemonViewModel.getPokemonList(), {})
 }
 
 @Preview(showBackground = true)
 @Composable
 fun PreviewPokedexGrid() {
-    PokedexGrid(pokemonList)
+    PokedexGrid(PokemonViewModel.getPokemonList(), {})
 }
 
 @Preview(showBackground = true)
 @Composable
 fun PreviewFavoriteRow() {
-    FavoritesRow(getFavoritePokemons(), {})
+    FavoritesRow(PokemonViewModel.getFavoritePokemon(), {})
 }
