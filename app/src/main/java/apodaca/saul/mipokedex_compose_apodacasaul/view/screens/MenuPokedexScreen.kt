@@ -1,6 +1,5 @@
 package apodaca.saul.mipokedex_compose_apodacasaul.view.screens
 
-import android.widget.Space
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -23,12 +22,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import apodaca.saul.mipokedex_compose_apodacasaul.PokedexList
 import apodaca.saul.mipokedex_compose_apodacasaul.R
 import apodaca.saul.mipokedex_compose_apodacasaul.view.components.FavoritesRow
 import apodaca.saul.mipokedex_compose_apodacasaul.view.components.PokedexGrid

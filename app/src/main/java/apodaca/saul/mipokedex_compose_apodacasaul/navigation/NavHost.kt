@@ -5,7 +5,6 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.toRoute
 import apodaca.saul.mipokedex_compose_apodacasaul.view.screens.MenuPokedexScreen
 import apodaca.saul.mipokedex_compose_apodacasaul.view.screens.PokemonDetailScreen
 import apodaca.saul.mipokedex_compose_apodacasaul.viewmodel.PokemonViewModel
