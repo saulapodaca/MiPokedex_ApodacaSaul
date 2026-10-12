@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import apodaca.saul.mipokedex_compose_apodacasaul.view.screens.MenuPokedexScreen
 import apodaca.saul.mipokedex_compose_apodacasaul.view.screens.PokemonDetailScreen
+import apodaca.saul.mipokedex_compose_apodacasaul.view.screens.PokemonHuntScreen
 import apodaca.saul.mipokedex_compose_apodacasaul.viewmodel.PokemonViewModel
 
 val PokemonViewModel = PokemonViewModel()
@@ -19,7 +20,12 @@ fun MyApp(innerPadding: PaddingValues) {
         composable<PokemonList> {
             MenuPokedexScreen(
                 innerPadding,
-                onNavigateToDetail = { id -> navController.navigate(route = PokemonDetail(id)) })
+                onNavigateToDetail = { id -> navController.navigate(route = PokemonDetail(id)) },
+                onNavigateToHunt = {navController.navigate(route= PokemonHunt)})
+        }
+
+        composable<PokemonHunt>{
+            PokemonHuntScreen(innerPadding)
         }
 
         //Pantalla del detalle

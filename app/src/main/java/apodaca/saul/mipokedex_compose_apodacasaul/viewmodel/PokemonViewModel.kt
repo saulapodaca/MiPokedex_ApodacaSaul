@@ -10,8 +10,29 @@ import apodaca.saul.mipokedex_compose_apodacasaul.model.domain.Pokemon
 class PokemonViewModel: ViewModel(){
 
     var wildPokemon by mutableStateOf<Pokemon?>(null)
+        private set //no lo manipula quien sea, solo el view model
+
+    var capturedPokemon by mutableStateOf(listOf<Pokemon>())
+        private set
+
+    var gonePokemon by mutableStateOf(false)
+
+    fun searchPokemon(){
+        wildPokemon = pokemonList.random()
+    }
 
     fun capturePokemon(){
+        wildPokemon?.let {
+            var isCaptured = (1..2).random()
+            if (isCaptured == 1){
+                capturedPokemon = capturedPokemon + it
+                gonePokemon = false
+            } else{
+                gonePokemon = true
+
+            }
+            wildPokemon = null
+        }
     }
 
     fun getPrevPokemon(actualPokemon: Number): Pokemon?{

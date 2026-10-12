@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
@@ -36,10 +37,13 @@ import apodaca.saul.mipokedex_compose_apodacasaul.ui.theme.Green
 import apodaca.saul.mipokedex_compose_apodacasaul.ui.theme.LightBlue
 import apodaca.saul.mipokedex_compose_apodacasaul.ui.theme.LightGreen
 import apodaca.saul.mipokedex_compose_apodacasaul.view.components.MenuPokedex
-
 val PokemonViewModel = PokemonViewModel()
 @Composable
-fun MenuPokedexScreen(innerPadding: PaddingValues, onNavigateToDetail: (id:Int)-> Unit) {
+fun MenuPokedexScreen(
+    innerPadding: PaddingValues,
+    onNavigateToDetail: (id:Int)-> Unit,
+    onNavigateToHunt: ()-> Unit)
+{
     //Estado que va a controlar la vista
     var grid by remember{ mutableStateOf(false)}
 
@@ -49,10 +53,18 @@ fun MenuPokedexScreen(innerPadding: PaddingValues, onNavigateToDetail: (id:Int)-
             .padding(innerPadding),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
-            text = "Mis Favoritos",
-            style = MaterialTheme.typography.titleLarge
-        )
+        Row(modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween) {
+            Text(
+                text = "Mis Favoritos",
+                style = MaterialTheme.typography.titleLarge
+            )
+            Button(onClick = {}) {
+                Text("Catch New")
+            }
+        }
+
         FavoritesRow(
             favoriteList = PokemonViewModel.getFavoritePokemon(),
             onNavigateToDetail
@@ -119,6 +131,6 @@ fun MenuPokedexScreen(innerPadding: PaddingValues, onNavigateToDetail: (id:Int)-
 @Preview(showBackground = true)
 @Composable
 fun MenuPokedexScreenPreview() {
-    MenuPokedexScreen(PaddingValues(10.dp, 15.dp), {})
+    MenuPokedexScreen(PaddingValues(10.dp, 15.dp), {}, {})
 }
 
