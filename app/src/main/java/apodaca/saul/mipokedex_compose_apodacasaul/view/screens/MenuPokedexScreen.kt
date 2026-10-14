@@ -60,7 +60,7 @@ fun MenuPokedexScreen(
                 text = "Mis Favoritos",
                 style = MaterialTheme.typography.titleLarge
             )
-            Button(onClick = {}) {
+            Button(onClick = onNavigateToHunt) {
                 Text("Catch New")
             }
         }
