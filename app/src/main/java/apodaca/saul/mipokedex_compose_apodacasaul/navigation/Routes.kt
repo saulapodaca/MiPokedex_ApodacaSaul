@@ -11,3 +11,5 @@ object PokemonHunt
 
 @Serializable
 data class PokemonDetail(val pokemon: Int)
+@Serializable
+object Login
