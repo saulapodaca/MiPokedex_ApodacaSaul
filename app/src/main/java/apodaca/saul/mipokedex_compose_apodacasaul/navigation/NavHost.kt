@@ -10,16 +10,21 @@ import apodaca.saul.mipokedex_compose_apodacasaul.view.screens.MenuPokedexScreen
 import apodaca.saul.mipokedex_compose_apodacasaul.view.screens.PokemonDetailScreen
 import apodaca.saul.mipokedex_compose_apodacasaul.view.screens.PokemonHuntScreen
 import apodaca.saul.mipokedex_compose_apodacasaul.viewmodel.PokemonViewModel
+import apodaca.saul.mipokedex_compose_apodacasaul.viewmodel.UserViewModel
 
 val PokemonViewModel = PokemonViewModel()
 @Composable
-fun MyApp(innerPadding: PaddingValues) {
+fun MyApp(innerPadding: PaddingValues, userViewModel: UserViewModel) {
     val navController = rememberNavController()
     val navigateToDetail = {id: Int ->navController.navigate(route = PokemonDetail(id))}
     val navigateToMenu = {
         navController.navigate(PokemonList)
     }
-    NavHost(navController, startDestination = PokemonList) {
+    NavHost(navController, startDestination = Login) {
+
+        composable<Login> {
+            LoginScreen(innerPadding,navigateToMenu, userViewModel)
+        }
 
         //Menu Principal
         composable<PokemonList> {
@@ -31,10 +36,6 @@ fun MyApp(innerPadding: PaddingValues) {
 
         composable<PokemonHunt>{
             PokemonHuntScreen(innerPadding, onNavigateToDetail = navigateToDetail)
-        }
-
-        composable<Login> {
-            LoginScreen(innerPadding,navigateToMenu)
         }
 
         //Pantalla del detalle
