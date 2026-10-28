@@ -3,6 +3,7 @@ package apodaca.saul.mipokedex_compose_apodacasaul.view.screens
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
@@ -36,7 +37,7 @@ fun LoginScreen(
         onNavigateToMenu()
     } else {
 
-        Column() {
+        Column(Modifier.fillMaxWidth()) {
 
             TextField(
                 value = user,
