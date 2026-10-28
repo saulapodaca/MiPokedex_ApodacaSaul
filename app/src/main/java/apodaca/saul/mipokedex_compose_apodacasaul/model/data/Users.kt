@@ -52,4 +52,12 @@ class Users(context: Context) {
         return false
 
     }
+
+    fun getCurrentUser(): User?{
+        val user = shared.getString(USER, null)
+        if (user != null){
+            return getUserByMail(user)
+        }
+        return null
+    }
 }
