@@ -6,7 +6,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import apodaca.saul.mipokedex_compose_apodacasaul.model.data.Users
 import apodaca.saul.mipokedex_compose_apodacasaul.model.domain.User
-import apodaca.saul.mipokedex_compose_apodacasaul.model.preferences.USER
 
 class UserViewModel(users: Users): ViewModel() {
     var currentUser by mutableStateOf<User?>(null)
