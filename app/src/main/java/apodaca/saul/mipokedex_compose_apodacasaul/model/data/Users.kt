@@ -3,6 +3,7 @@ package apodaca.saul.mipokedex_compose_apodacasaul.model.data
 import android.content.Context
 import apodaca.saul.mipokedex_compose_apodacasaul.model.domain.User
 import apodaca.saul.mipokedex_compose_apodacasaul.model.preferences.ARCHIVO
+import apodaca.saul.mipokedex_compose_apodacasaul.model.preferences.POKEMON_DISPLAY
 import apodaca.saul.mipokedex_compose_apodacasaul.model.preferences.USER
 import apodaca.saul.mipokedex_compose_apodacasaul.model.preferences.USERNAME
 
@@ -23,7 +24,11 @@ class Users(context: Context) {
     fun loginService(user: String, contrasenia: String): User? {
         val user = getUserByMail(user)
         user?.let {
-            if (user.password.equals(contrasenia)) return user
+            if (user.password.equals(contrasenia)) {
+                saveUser(user.email, user.name)
+                return user
+            }
+
         }
         return null
     }
@@ -36,11 +41,10 @@ class Users(context: Context) {
     }
 
     fun logout() {
-        val editor = shared.edit()
-        editor.putString(USER, null)
-        editor.putString(USERNAME, null)
-        editor.apply()
-        editor.clear()
+        shared.edit()
+            .remove(USER)
+            .remove(USERNAME)
+            .apply()
     }
 
     fun isLoggedIn(): Boolean {
@@ -59,5 +63,19 @@ class Users(context: Context) {
             return getUserByMail(user)
         }
         return null
+    }
+
+    fun savePokemonDisplay(grid: Boolean){
+        val email = shared.getString(USER, null) ?: return
+
+        shared.edit()
+            .putBoolean("${POKEMON_DISPLAY}_$email", grid)
+            .apply()
+    }
+
+    fun getPokemonDisplay(): Boolean {
+        val email = shared.getString(USER, null) ?: return false
+
+        return shared.getBoolean("${POKEMON_DISPLAY}_$email", false)
     }
 }

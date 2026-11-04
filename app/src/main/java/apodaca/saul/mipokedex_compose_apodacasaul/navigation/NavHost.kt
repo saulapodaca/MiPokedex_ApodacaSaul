@@ -31,7 +31,19 @@ fun MyApp(innerPadding: PaddingValues, userViewModel: UserViewModel) {
             MenuPokedexScreen(
                 innerPadding,
                 onNavigateToDetail = { id -> navController.navigate(route = PokemonDetail(id)) },
-                onNavigateToHunt = {navController.navigate(route= PokemonHunt)})
+                onNavigateToHunt = {navController.navigate(route= PokemonHunt)},
+                onLogout = {
+                    userViewModel.logout()
+                    navController.navigate(Login){
+                        popUpTo<PokemonList> {
+                            inclusive = true
+                        }
+                        launchSingleTop = true
+                    }
+                },
+                grid = userViewModel.grid,
+                onGridChange = { userViewModel.changePokemonDisplay(it) }
+                )
         }
 
         composable<PokemonHunt>{

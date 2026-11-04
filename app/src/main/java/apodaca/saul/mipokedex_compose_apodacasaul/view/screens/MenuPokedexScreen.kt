@@ -1,6 +1,7 @@
 package apodaca.saul.mipokedex_compose_apodacasaul.view.screens
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -10,9 +11,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
@@ -42,95 +46,117 @@ val PokemonViewModel = PokemonViewModel()
 fun MenuPokedexScreen(
     innerPadding: PaddingValues,
     onNavigateToDetail: (id:Int)-> Unit,
-    onNavigateToHunt: ()-> Unit)
+    onNavigateToHunt: ()-> Unit,
+    onLogout: ()-> Unit,
+    grid: Boolean,
+    onGridChange: (Boolean) -> Unit)
 {
-    //Estado que va a controlar la vista
-    var grid by remember{ mutableStateOf(false)}
 
-    Column(
+    Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(innerPadding),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Row(modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween) {
-            Text(
-                text = "Mis Favoritos",
-                style = MaterialTheme.typography.titleLarge
+            .padding(innerPadding)
+    ){
+        Column(
+            modifier = Modifier
+                .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Row(modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween) {
+                Text(
+                    text = "Mis Favoritos",
+                    style = MaterialTheme.typography.titleLarge
+                )
+                OutlinedButton(onClick = onLogout) {
+                    Text("Log out")
+                }
+            }
+
+            FavoritesRow(
+                favoriteList = PokemonViewModel.getFavoritePokemon(),
+                onNavigateToDetail
             )
-            Button(onClick = onNavigateToHunt) {
-                Text("Catch New")
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ){
+                Text(
+                    text = "Todos mis pokemones",
+                    style = MaterialTheme.typography.titleLarge
+                )
+
+                Switch(
+                    checked = grid,
+                    onCheckedChange = onGridChange,
+                    colors = SwitchDefaults.colors(
+                        checkedThumbColor = Green,
+                        checkedTrackColor = LightGreen,
+                        uncheckedThumbColor = Blue,
+                        uncheckedTrackColor = LightBlue,
+                        uncheckedBorderColor = Color.Transparent
+                    ),
+                    thumbContent = if (grid) {
+                        {
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_view_grid),
+                                contentDescription = "grid icon",
+                                modifier = Modifier.size(SwitchDefaults.IconSize)
+                            )
+                        }
+                    } else {
+                        {
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_view_list),
+                                contentDescription = "list icon",
+                                modifier = Modifier.size(SwitchDefaults.IconSize)
+                            )
+                        }
+                    })
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+
+            //Este es el condicional para el render dependiendo el wwitch
+            if (grid) {
+                PokedexGrid(
+                    pokemonList = pokemonList,
+                    onNavigateToDetail = onNavigateToDetail
+                )
+            } else {
+                MenuPokedex(
+                    pokemonList = pokemonList,
+                    onNavigateToDetail
+                )
             }
         }
-
-        FavoritesRow(
-            favoriteList = PokemonViewModel.getFavoritePokemon(),
-            onNavigateToDetail
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Row(
+        FloatingActionButton(
+            onClick = onNavigateToHunt,
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ){
+                .align(Alignment.BottomEnd)
+                .padding(15.dp),
+            shape = RoundedCornerShape(50),
+            containerColor = MaterialTheme.colorScheme.primary,
+            contentColor = MaterialTheme.colorScheme.onPrimary
+        ) {
             Text(
-                text = "Todos mis pokemones",
-                style = MaterialTheme.typography.titleLarge
-            )
-
-            Switch(
-                checked = grid,
-                onCheckedChange = { grid = it },
-                colors = SwitchDefaults.colors(
-                    checkedThumbColor = Green,
-                    checkedTrackColor = LightGreen,
-                    uncheckedThumbColor = Blue,
-                    uncheckedTrackColor = LightBlue,
-                    uncheckedBorderColor = Color.Transparent
-                ),
-                thumbContent = if (grid) {
-                    {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_view_grid),
-                            contentDescription = "grid icon",
-                            modifier = Modifier.size(SwitchDefaults.IconSize)
-                        )
-                    }
-                } else {
-                    {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_view_list),
-                            contentDescription = "list icon",
-                            modifier = Modifier.size(SwitchDefaults.IconSize)
-                        )
-                    }
-                })
-        }
-        Spacer(modifier = Modifier.height(8.dp))
-
-        //Este es el condicional para el render dependiendo el wwitch
-        if (grid) {
-            PokedexGrid(
-                pokemonList = pokemonList,
-                onNavigateToDetail = onNavigateToDetail
-            )
-        } else {
-            MenuPokedex(
-                pokemonList = pokemonList,
-                onNavigateToDetail
+                "Catch New",
+                modifier = Modifier.padding(horizontal = 20.dp)
             )
         }
     }
+
+
 }
 
 @Preview(showBackground = true)
 @Composable
 fun MenuPokedexScreenPreview() {
-    MenuPokedexScreen(PaddingValues(10.dp, 15.dp), {}, {})
+    MenuPokedexScreen(PaddingValues(10.dp, 15.dp), {}, {}, {}, true, {})
 }
 
