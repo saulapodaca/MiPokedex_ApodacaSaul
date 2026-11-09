@@ -67,4 +67,13 @@ class Users(context: Context) {
 
         return shared.getBoolean("${POKEMON_DISPLAY}_$email", false)
     }
+
+    fun savePokemonDisplay(grid: Boolean){
+        val email = shared.getString(USER, null) ?: return
+
+        shared.edit()
+            .putBoolean("${POKEMON_DISPLAY}_$email", grid)
+            .apply()
+    }
+
 }
