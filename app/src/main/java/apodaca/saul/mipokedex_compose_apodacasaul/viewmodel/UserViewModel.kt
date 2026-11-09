@@ -10,9 +10,9 @@ import apodaca.saul.mipokedex_compose_apodacasaul.model.data.Users
 import apodaca.saul.mipokedex_compose_apodacasaul.model.domain.Pokemon
 import apodaca.saul.mipokedex_compose_apodacasaul.model.domain.User
 import apodaca.saul.mipokedex_compose_apodacasaul.model.preferences.PokemonSerializer
+import apodaca.saul.mipokedex_compose_apodacasaul.model.preferences.USER
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.stateIn
 
 class UserViewModel(
     users: Users,
@@ -50,7 +50,9 @@ class UserViewModel(
             grid = users.getPokemonDisplay()
             loginError = false
             errorDescription = ""
+            users.saveUser(user.email, user.name)
         }
+
     }
 
     fun isLoggedIn(): Boolean{

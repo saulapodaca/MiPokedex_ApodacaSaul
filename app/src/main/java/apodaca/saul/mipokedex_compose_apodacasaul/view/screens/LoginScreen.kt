@@ -1,12 +1,13 @@
 package apodaca.saul.mipokedex_compose_apodacasaul.view.screens
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.text.input.TextObfuscationMode
@@ -44,8 +45,11 @@ fun LoginScreen(
     } else {
 
         Column(
-            Modifier.fillMaxWidth()
-            .padding(15.dp)
+            Modifier.fillMaxSize()
+                .padding(innerPadding)
+            .padding(30.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
 
             TextField(
@@ -53,22 +57,29 @@ fun LoginScreen(
                 label = {
                     Text("Correo Electrónico")
                 },
-                onValueChange = { it -> user = it },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
+                onValueChange = { user = it },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                modifier = Modifier.fillMaxWidth()
             )
+
+            Spacer(Modifier.size(40.dp))
 
             SecureTextField(
                 state= password, label = {
                     Text("Contraseña")
                 }, textObfuscationMode = TextObfuscationMode.RevealLastTyped,
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                modifier = Modifier.fillMaxWidth()
             )
+
+            Spacer(Modifier.size(40.dp))
+
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Button(onClick = {
-                    viewModel.login(user, password.text as String)
+                    viewModel.login(user, password.text.toString())
                     if (!viewModel.loginError) {
                         onNavigateToMenu()
                     }
@@ -78,19 +89,21 @@ fun LoginScreen(
                 Spacer(Modifier.size(40.dp))
 
                 if (viewModel.loginError) {
-                    Text(viewModel.errorDescription, color = Color.Red, fontStyle = FontStyle.Italic)
+                    Text(
+                        viewModel.errorDescription,
+                        color = Color.Red,
+                        fontStyle = FontStyle.Italic,
+                        modifier = Modifier.fillMaxWidth()
+                    )
                 }
             }
-
-
-
-
         }
     }
 }
 
+
 @Preview(showBackground = true)
 @Composable
 fun LoginScreenPreview() {
-    LoginScreen(PaddingValues(15.dp), {}, )
+    LoginScreen(PaddingValues(15.dp), {})
 }
