@@ -14,9 +14,11 @@ import apodaca.saul.mipokedex_compose_apodacasaul.viewmodel.PokemonDetailViewMod
 import apodaca.saul.mipokedex_compose_apodacasaul.viewmodel.PokemonViewModel
 import apodaca.saul.mipokedex_compose_apodacasaul.viewmodel.UserViewModel
 
-val PokemonViewModel = PokemonViewModel()
 @Composable
-fun MyApp(innerPadding: PaddingValues, userViewModel: UserViewModel, pokemonDetalViewModel: PokemonDetailViewModel) {
+fun MyApp(innerPadding: PaddingValues, userViewModel: UserViewModel,
+          pokemonDetailViewModel: PokemonDetailViewModel,
+          pokemonViewModel: PokemonViewModel
+) {
     val navController = rememberNavController()
     val navigateToDetail = {id: Int ->navController.navigate(route = PokemonDetail(id))}
     val navigateToMenu = {
@@ -63,12 +65,11 @@ fun MyApp(innerPadding: PaddingValues, userViewModel: UserViewModel, pokemonDeta
         //Pantalla del detalle
         composable<PokemonDetail> {
             val pokemonNumber = it.arguments?.getInt("pokemon") ?: -1
-            val pokemon = PokemonViewModel.getPokemonByNumber(pokemonNumber)
 
             //Esto es para que las flechitas de abajo del detalle funcionen jeje
             PokemonDetailScreen(
                 innerPadding = innerPadding,
-                pokemon = pokemon,
+                pokemonNumber = pokemonNumber,
                 onNavigateToDetail = { nextOrPrevId ->
                     navController.navigate(route = PokemonDetail(nextOrPrevId)) {
                         //Esto reemplaza el detalle actual para que no se apilen infinitamente
@@ -78,7 +79,9 @@ fun MyApp(innerPadding: PaddingValues, userViewModel: UserViewModel, pokemonDeta
                         launchSingleTop = true
                     }
                 },
-                pokemonDetalViewModel
+                pokemonDetailViewModel,
+                pokemonViewModel
+
             )
         }
     }

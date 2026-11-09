@@ -16,6 +16,7 @@ import apodaca.saul.mipokedex_compose_apodacasaul.model.preferences.ARCHIVO
 import apodaca.saul.mipokedex_compose_apodacasaul.navigation.MyApp
 import apodaca.saul.mipokedex_compose_apodacasaul.ui.theme.MiPokedex_Compose_ApodacaSaulTheme
 import apodaca.saul.mipokedex_compose_apodacasaul.viewmodel.PokemonDetailViewModel
+import apodaca.saul.mipokedex_compose_apodacasaul.viewmodel.PokemonViewModel
 import apodaca.saul.mipokedex_compose_apodacasaul.viewmodel.UserViewModel
 
 class MainActivity : ComponentActivity() {
@@ -25,11 +26,12 @@ class MainActivity : ComponentActivity() {
         val companionPreferences = CompanionPreferences(this)
         val userViewModel = UserViewModel(users, companionPreferences)
         val pokemonDetailViewModel = PokemonDetailViewModel(companionPreferences)
+        val pokemonViewModel = PokemonViewModel()
         enableEdgeToEdge()
         setContent {
             MiPokedex_Compose_ApodacaSaulTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    MyApp(innerPadding, userViewModel, pokemonDetailViewModel)
+                    MyApp(innerPadding, userViewModel, pokemonDetailViewModel, pokemonViewModel)
                 }
             }
         }

@@ -49,19 +49,22 @@ import apodaca.saul.mipokedex_compose_apodacasaul.ui.theme.Red
 import apodaca.saul.mipokedex_compose_apodacasaul.ui.theme.White
 import apodaca.saul.mipokedex_compose_apodacasaul.utilities.getColorType
 import apodaca.saul.mipokedex_compose_apodacasaul.viewmodel.PokemonDetailViewModel
+import apodaca.saul.mipokedex_compose_apodacasaul.viewmodel.PokemonViewModel
 
 @Composable
 fun PokemonDetailScreen(
     innerPadding: PaddingValues,
-    pokemon: Pokemon,
+    pokemonNumber: Int,
     onNavigateToDetail: (id:Int) -> Unit,
-    pokemonDetailModel: PokemonDetailViewModel = viewModel()
+    pokemonDetailViewModel: PokemonDetailViewModel = viewModel(),
+    pokemonViewModel: PokemonViewModel = viewModel()
 ) {
+    var pokemon = pokemonViewModel.getPokemonByNumber(pokemonNumber)
     //Estado que recordará si el pokemon está en favoritos
     var isFavorite by remember(pokemon.number) { mutableStateOf(pokemon.favorite) }
     //Los pokemones previos y siguientes para completar la vista
-    val prevPokemon = PokemonViewModel.getPrevPokemon(pokemon.number)
-    val nextPokemon = PokemonViewModel.getNextPokemon(pokemon.number)
+    val prevPokemon = pokemonViewModel.getPrevPokemon(pokemon.number)
+    val nextPokemon = pokemonViewModel.getNextPokemon(pokemon.number)
 
     Box(
         modifier = Modifier
@@ -98,7 +101,7 @@ fun PokemonDetailScreen(
                     fontFamily = FontFamily.Serif
                 )
             }
-            Button({pokemonDetailModel.saveCompanion(pokemon)}) {
+            Button({pokemonDetailViewModel.saveCompanion(pokemon)}) {
                 Text("Seleccionar Compañero")
             }
             IconButton(
@@ -241,7 +244,7 @@ fun PokemonDetailScreen(
 @Preview(showBackground = true)
 @Composable
 fun PokemonDetailScreenPreview() {
-    PokemonDetailScreen(PaddingValues(0.dp, 0.dp), bulbasaur, {})
+    PokemonDetailScreen(PaddingValues(0.dp, 0.dp), bulbasaur.number, {})
 }
 
 //Es la pastilla de los tipos
