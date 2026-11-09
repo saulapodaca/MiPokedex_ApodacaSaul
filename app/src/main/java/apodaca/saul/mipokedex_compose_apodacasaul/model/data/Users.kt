@@ -3,6 +3,7 @@ package apodaca.saul.mipokedex_compose_apodacasaul.model.data
 import android.content.Context
 import apodaca.saul.mipokedex_compose_apodacasaul.model.domain.User
 import apodaca.saul.mipokedex_compose_apodacasaul.model.preferences.ARCHIVO
+import apodaca.saul.mipokedex_compose_apodacasaul.model.preferences.POKEMON_DISPLAY
 import apodaca.saul.mipokedex_compose_apodacasaul.model.preferences.USER
 import apodaca.saul.mipokedex_compose_apodacasaul.model.preferences.USERNAME
 
@@ -59,5 +60,11 @@ class Users(context: Context) {
             return getUserByMail(user)
         }
         return null
+    }
+
+    fun getPokemonDisplay(): Boolean {
+        val email = shared.getString(USER, null) ?: return false
+
+        return shared.getBoolean("${POKEMON_DISPLAY}_$email", false)
     }
 }
