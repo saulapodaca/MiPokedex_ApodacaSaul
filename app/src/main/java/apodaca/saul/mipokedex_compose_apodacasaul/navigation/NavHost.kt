@@ -9,16 +9,21 @@ import apodaca.saul.mipokedex_compose_apodacasaul.view.screens.LoginScreen
 import apodaca.saul.mipokedex_compose_apodacasaul.view.screens.MenuPokedexScreen
 import apodaca.saul.mipokedex_compose_apodacasaul.view.screens.PokemonDetailScreen
 import apodaca.saul.mipokedex_compose_apodacasaul.view.screens.PokemonHuntScreen
+import apodaca.saul.mipokedex_compose_apodacasaul.view.screens.ProfileScreen
+import apodaca.saul.mipokedex_compose_apodacasaul.viewmodel.PokemonDetailViewModel
 import apodaca.saul.mipokedex_compose_apodacasaul.viewmodel.PokemonViewModel
 import apodaca.saul.mipokedex_compose_apodacasaul.viewmodel.UserViewModel
 
 val PokemonViewModel = PokemonViewModel()
 @Composable
-fun MyApp(innerPadding: PaddingValues, userViewModel: UserViewModel) {
+fun MyApp(innerPadding: PaddingValues, userViewModel: UserViewModel, pokemonDetalViewModel: PokemonDetailViewModel) {
     val navController = rememberNavController()
     val navigateToDetail = {id: Int ->navController.navigate(route = PokemonDetail(id))}
     val navigateToMenu = {
         navController.navigate(PokemonList)
+    }
+    val navigateToProfile = {
+        navController.navigate(Profile)
     }
     NavHost(navController, startDestination = Login) {
 
@@ -42,12 +47,17 @@ fun MyApp(innerPadding: PaddingValues, userViewModel: UserViewModel) {
                     }
                 },
                 grid = userViewModel.grid,
-                onGridChange = { userViewModel.changePokemonDisplay(it) }
+                onGridChange = { userViewModel.changePokemonDisplay(it) },
+                navigateToProfile
                 )
         }
 
         composable<PokemonHunt>{
             PokemonHuntScreen(innerPadding, onNavigateToDetail = navigateToDetail)
+        }
+
+        composable<Profile> {
+            ProfileScreen(innerPadding, userViewModel)
         }
 
         //Pantalla del detalle
@@ -67,7 +77,8 @@ fun MyApp(innerPadding: PaddingValues, userViewModel: UserViewModel) {
                         }
                         launchSingleTop = true
                     }
-                }
+                },
+                pokemonDetalViewModel
             )
         }
     }

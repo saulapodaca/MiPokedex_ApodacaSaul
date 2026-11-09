@@ -2,6 +2,7 @@ package apodaca.saul.mipokedex_compose_apodacasaul.model.preferences
 
 import androidx.datastore.core.CorruptionException
 import androidx.datastore.core.Serializer
+import apodaca.saul.mipokedex_compose_apodacasaul.R
 import apodaca.saul.mipokedex_compose_apodacasaul.model.domain.Pokemon
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.builtins.serializer
@@ -20,7 +21,7 @@ object PokemonSerializer: Serializer<Pokemon>{
         weight = 0f,
         favorite = false,
         ability = "",
-        image = -1)
+        image = R.drawable.wtp)
 
     override suspend fun readFrom(input: InputStream): Pokemon {
         return try{

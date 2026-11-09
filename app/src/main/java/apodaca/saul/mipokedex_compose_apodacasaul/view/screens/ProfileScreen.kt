@@ -24,6 +24,8 @@ import apodaca.saul.mipokedex_compose_apodacasaul.utilities.getColorType
 import apodaca.saul.mipokedex_compose_apodacasaul.viewmodel.UserViewModel
 import kotlinx.coroutines.flow.first
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @Composable
 fun ProfileScreen(
@@ -32,7 +34,9 @@ fun ProfileScreen(
 ){
     val nombre = if(userViewModel.currentUser != null) "${userViewModel.currentUser!!.name}" else "Nombre Usuario"
     val mail = if(userViewModel.currentUser != null) "${userViewModel.currentUser!!.email}" else "Correo Electronico"
-    val pokemon = if(userViewModel.currentUser != null) userViewModel.companion.collectAsState().value else null
+
+    val pokemon by userViewModel.companion.collectAsStateWithLifecycle()
+
     Column(
         Modifier.fillMaxSize()
             .padding(innerPadding)

@@ -10,25 +10,26 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import apodaca.saul.mipokedex_compose_apodacasaul.model.data.CompanionPreferences
 import apodaca.saul.mipokedex_compose_apodacasaul.model.data.Users
-import apodaca.saul.mipokedex_compose_apodacasaul.view.components.MenuPokedex
-import apodaca.saul.mipokedex_compose_apodacasaul.model.data.pokemonList
 import apodaca.saul.mipokedex_compose_apodacasaul.model.preferences.ARCHIVO
 import apodaca.saul.mipokedex_compose_apodacasaul.navigation.MyApp
 import apodaca.saul.mipokedex_compose_apodacasaul.ui.theme.MiPokedex_Compose_ApodacaSaulTheme
-import apodaca.saul.mipokedex_compose_apodacasaul.view.screens.LoginScreen
+import apodaca.saul.mipokedex_compose_apodacasaul.viewmodel.PokemonDetailViewModel
 import apodaca.saul.mipokedex_compose_apodacasaul.viewmodel.UserViewModel
 
-class PokedexList : ComponentActivity() {
+class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val users = Users(this)
-        val userViewModel = UserViewModel(users)
+        val companionPreferences = CompanionPreferences(this)
+        val userViewModel = UserViewModel(users, companionPreferences)
+        val pokemonDetailViewModel = PokemonDetailViewModel(companionPreferences)
         enableEdgeToEdge()
         setContent {
             MiPokedex_Compose_ApodacaSaulTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    MyApp(innerPadding, userViewModel)
+                    MyApp(innerPadding, userViewModel, pokemonDetailViewModel)
                 }
             }
         }

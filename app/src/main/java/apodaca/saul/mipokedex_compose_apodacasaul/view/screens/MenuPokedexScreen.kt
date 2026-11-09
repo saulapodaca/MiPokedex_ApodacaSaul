@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Switch
@@ -44,7 +45,8 @@ fun MenuPokedexScreen(
     onNavigateToHunt: ()-> Unit,
     onLogout: ()-> Unit,
     grid: Boolean,
-    onGridChange: (Boolean) -> Unit)
+    onGridChange: (Boolean) -> Unit,
+    onNavigateToProfile: ()-> Unit)
 {
 
     Box(
@@ -57,6 +59,15 @@ fun MenuPokedexScreen(
                 .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+
+            IconButton(onNavigateToProfile) {
+                Icon(
+                    painter = painterResource(R.drawable.ic_account_circle),
+                    contentDescription = "icon profile",
+                    modifier = Modifier.fillMaxSize()
+                )
+            }
+
             Row(modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween) {
@@ -152,6 +163,6 @@ fun MenuPokedexScreen(
 @Preview(showBackground = true)
 @Composable
 fun MenuPokedexScreenPreview() {
-    MenuPokedexScreen(PaddingValues(10.dp, 15.dp), {}, {}, {}, true, {})
+    MenuPokedexScreen(PaddingValues(10.dp, 15.dp), {}, {}, {}, true, {}, {})
 }
 

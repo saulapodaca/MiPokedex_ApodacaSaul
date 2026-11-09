@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -37,6 +38,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import apodaca.saul.mipokedex_compose_apodacasaul.R
 import apodaca.saul.mipokedex_compose_apodacasaul.model.data.bulbasaur
 import apodaca.saul.mipokedex_compose_apodacasaul.model.domain.Pokemon
@@ -46,9 +48,15 @@ import apodaca.saul.mipokedex_compose_apodacasaul.ui.theme.OffWhite
 import apodaca.saul.mipokedex_compose_apodacasaul.ui.theme.Red
 import apodaca.saul.mipokedex_compose_apodacasaul.ui.theme.White
 import apodaca.saul.mipokedex_compose_apodacasaul.utilities.getColorType
+import apodaca.saul.mipokedex_compose_apodacasaul.viewmodel.PokemonDetailViewModel
 
 @Composable
-fun PokemonDetailScreen(innerPadding: PaddingValues, pokemon: Pokemon, onNavigateToDetail: (id:Int) -> Unit) {
+fun PokemonDetailScreen(
+    innerPadding: PaddingValues,
+    pokemon: Pokemon,
+    onNavigateToDetail: (id:Int) -> Unit,
+    pokemonDetailModel: PokemonDetailViewModel = viewModel()
+) {
     //Estado que recordará si el pokemon está en favoritos
     var isFavorite by remember(pokemon.number) { mutableStateOf(pokemon.favorite) }
     //Los pokemones previos y siguientes para completar la vista
@@ -89,6 +97,9 @@ fun PokemonDetailScreen(innerPadding: PaddingValues, pokemon: Pokemon, onNavigat
                     fontSize = 24.sp,
                     fontFamily = FontFamily.Serif
                 )
+            }
+            Button({pokemonDetailModel.saveCompanion(pokemon)}) {
+                Text("Seleccionar Compañero")
             }
             IconButton(
                 onClick = {

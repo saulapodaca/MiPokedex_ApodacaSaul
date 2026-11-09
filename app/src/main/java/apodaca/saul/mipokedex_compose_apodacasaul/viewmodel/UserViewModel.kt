@@ -13,6 +13,7 @@ import apodaca.saul.mipokedex_compose_apodacasaul.model.preferences.PokemonSeria
 import apodaca.saul.mipokedex_compose_apodacasaul.model.preferences.USER
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
 
 class UserViewModel(
     users: Users,
@@ -50,7 +51,7 @@ class UserViewModel(
             grid = users.getPokemonDisplay()
             loginError = false
             errorDescription = ""
-            users.saveUser(user.email, user.name)
+            users.saveUser(loggedUser.email, loggedUser.name)
         }
 
     }
