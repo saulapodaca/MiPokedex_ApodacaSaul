@@ -38,6 +38,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import apodaca.saul.mipokedex_compose_apodacasaul.R
 import apodaca.saul.mipokedex_compose_apodacasaul.model.data.bulbasaur
@@ -50,6 +51,7 @@ import apodaca.saul.mipokedex_compose_apodacasaul.ui.theme.White
 import apodaca.saul.mipokedex_compose_apodacasaul.utilities.getColorType
 import apodaca.saul.mipokedex_compose_apodacasaul.viewmodel.PokemonDetailViewModel
 import apodaca.saul.mipokedex_compose_apodacasaul.viewmodel.PokemonViewModel
+import apodaca.saul.mipokedex_compose_apodacasaul.viewmodel.UserViewModel
 
 @Composable
 fun PokemonDetailScreen(
@@ -57,7 +59,8 @@ fun PokemonDetailScreen(
     pokemonNumber: Int,
     onNavigateToDetail: (id:Int) -> Unit,
     pokemonDetailViewModel: PokemonDetailViewModel = viewModel(),
-    pokemonViewModel: PokemonViewModel = viewModel()
+    pokemonViewModel: PokemonViewModel = viewModel(),
+    userViewModel: UserViewModel = viewModel()
 ) {
     var pokemon = pokemonViewModel.getPokemonByNumber(pokemonNumber)
     //Estado que recordará si el pokemon está en favoritos
@@ -65,6 +68,8 @@ fun PokemonDetailScreen(
     //Los pokemones previos y siguientes para completar la vista
     val prevPokemon = pokemonViewModel.getPrevPokemon(pokemon.number)
     val nextPokemon = pokemonViewModel.getNextPokemon(pokemon.number)
+
+    val pokemonCompanion by userViewModel.companion.collectAsStateWithLifecycle()
 
     Box(
         modifier = Modifier
@@ -135,6 +140,11 @@ fun PokemonDetailScreen(
                 //las pastillas de los tipos
                 Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                     TypePill(text = pokemon.type, getColorType(pokemon.type).first)
+                }
+                if (pokemonNumber == pokemonCompanion.number){
+                    Text("⭐ Es tu Compañero",
+                        fontFamily = FontFamily.SansSerif
+                    )
                 }
 
                 Spacer(modifier = Modifier.height(20.dp))
