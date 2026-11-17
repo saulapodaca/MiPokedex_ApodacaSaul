@@ -2,7 +2,6 @@ package apodaca.saul.mipokedex_compose_apodacasaul.model.data.sqlite
 
 import android.content.ContentValues
 import android.database.Cursor
-import androidx.compose.ui.Modifier
 import apodaca.saul.mipokedex_compose_apodacasaul.model.domain.Pokemon
 
 class PokemonMapper {

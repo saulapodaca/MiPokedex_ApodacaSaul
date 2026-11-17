@@ -2,7 +2,6 @@ package apodaca.saul.mipokedex_compose_apodacasaul.model.domain
 
 import apodaca.saul.mipokedex_compose_apodacasaul.R
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.Serializer
 
 @Serializable
 data class Pokemon(

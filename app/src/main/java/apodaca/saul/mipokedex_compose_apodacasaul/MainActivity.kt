@@ -33,7 +33,7 @@ class MainActivity : ComponentActivity() {
         val userViewModel = UserViewModel(users, companionPreferences)
         val pokemonDetailViewModel = PokemonDetailViewModel(companionPreferences)
         val pokemonViewModel = PokemonViewModel()
-        val helper: DatabaseHelper = DatabaseHelper(this)
+        val helper = DatabaseHelper(this)
         val pokemonDAO: IPokemonDAO = PokemonDAO(helper)
         val pokemonRepository: IPokemonRepository = PokemonSQLRepository(pokemonDAO)
         val addPokemonViewModel = AddPokemonViewModel(pokemonRepository)

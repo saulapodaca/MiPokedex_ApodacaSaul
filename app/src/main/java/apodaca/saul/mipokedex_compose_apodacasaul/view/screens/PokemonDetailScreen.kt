@@ -44,7 +44,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import apodaca.saul.mipokedex_compose_apodacasaul.R
 import apodaca.saul.mipokedex_compose_apodacasaul.model.data.bulbasaur
-import apodaca.saul.mipokedex_compose_apodacasaul.model.domain.Pokemon
 import apodaca.saul.mipokedex_compose_apodacasaul.ui.theme.Favorite
 import apodaca.saul.mipokedex_compose_apodacasaul.ui.theme.Gray
 import apodaca.saul.mipokedex_compose_apodacasaul.ui.theme.OffWhite
@@ -75,7 +74,7 @@ fun PokemonDetailScreen(
     val nextPokemon = pokemonViewModel.getNextPokemon(pokemon.number)
 
     val pokemonCompanion by userViewModel.companion.collectAsStateWithLifecycle()
-    val isCurrentCompanion = pokemon.number == pokemonCompanion?.number
+    val isCurrentCompanion = pokemon.number == pokemonCompanion.number
 
     Box(
         modifier = Modifier
@@ -230,7 +229,7 @@ fun PokemonDetailScreen(
                         modifier = Modifier
                             .clip(RoundedCornerShape(8.dp))
                             .clickable(enabled = prevPokemon != null) {
-                                prevPokemon?.let { onNavigateToDetail(it.number.toInt()) }
+                                prevPokemon?.let { onNavigateToDetail(it.number) }
                             }
                     ) {
                         if (prevPokemon != null) {
@@ -251,7 +250,7 @@ fun PokemonDetailScreen(
                         modifier = Modifier
                             .clip(RoundedCornerShape(8.dp))
                             .clickable(enabled = nextPokemon != null) {
-                                nextPokemon?.let { onNavigateToDetail(it.number.toInt()) }
+                                nextPokemon?.let { onNavigateToDetail(it.number) }
                             }
                     ) {
                         if (nextPokemon != null) {

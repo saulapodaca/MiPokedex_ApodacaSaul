@@ -3,7 +3,6 @@ package apodaca.saul.mipokedex_compose_apodacasaul.viewmodel
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import apodaca.saul.mipokedex_compose_apodacasaul.model.data.interfaces.IPokemonRepository
