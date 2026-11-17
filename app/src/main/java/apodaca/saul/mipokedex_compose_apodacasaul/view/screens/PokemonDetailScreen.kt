@@ -1,5 +1,6 @@
 package apodaca.saul.mipokedex_compose_apodacasaul.view.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -30,6 +31,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
@@ -57,19 +59,23 @@ import apodaca.saul.mipokedex_compose_apodacasaul.viewmodel.UserViewModel
 fun PokemonDetailScreen(
     innerPadding: PaddingValues,
     pokemonNumber: Int,
-    onNavigateToDetail: (id:Int) -> Unit,
+    onNavigateToDetail: (id: Int) -> Unit,
     pokemonDetailViewModel: PokemonDetailViewModel = viewModel(),
     pokemonViewModel: PokemonViewModel = viewModel(),
     userViewModel: UserViewModel = viewModel()
 ) {
-    var pokemon = pokemonViewModel.getPokemonByNumber(pokemonNumber)
-    //Estado que recordará si el pokemon está en favoritos
+    val context = LocalContext.current
+    val pokemon = pokemonViewModel.getPokemonByNumber(pokemonNumber)
+
+    // Estado que recordará si el pokemon está en favoritos
     var isFavorite by remember(pokemon.number) { mutableStateOf(pokemon.favorite) }
-    //Los pokemones previos y siguientes para completar la vista
+
+    // Los pokemones previos y siguientes para completar la vista
     val prevPokemon = pokemonViewModel.getPrevPokemon(pokemon.number)
     val nextPokemon = pokemonViewModel.getNextPokemon(pokemon.number)
 
     val pokemonCompanion by userViewModel.companion.collectAsStateWithLifecycle()
+    val isCurrentCompanion = pokemon.number == pokemonCompanion?.number
 
     Box(
         modifier = Modifier
@@ -106,9 +112,24 @@ fun PokemonDetailScreen(
                     fontFamily = FontFamily.Serif
                 )
             }
-            Button({pokemonDetailViewModel.saveCompanion(pokemon)}) {
-                Text("Seleccionar Compañero")
+
+            // 2. Mostrar botón SOLO cuando NO es tu compañero
+            if (!isCurrentCompanion) {
+                Button(
+                    onClick = {
+                        pokemonDetailViewModel.saveCompanion(pokemon)
+                        // 1. Mensaje de confirmación
+                        Toast.makeText(
+                            context,
+                            "Compañero seleccionado",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                ) {
+                    Text("Seleccionar Compañero")
+                }
             }
+
             IconButton(
                 onClick = {
                     isFavorite = PokemonViewModel.toggleFavorite(pokemon.number)
@@ -122,46 +143,54 @@ fun PokemonDetailScreen(
                 )
             }
         }
-        Box(modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight(0.7f)
-            .align(Alignment.BottomCenter)
-            //Es para hacer la forma de la caja visible y darle las esquinas redondeadas
-            .clip(RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp))
-            .background(OffWhite)
-            .padding(horizontal = 24.dp, vertical = 20.dp)
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(0.7f)
+                .align(Alignment.BottomCenter)
+                .clip(RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp))
+                .background(OffWhite)
+                .padding(horizontal = 24.dp, vertical = 20.dp)
         ) {
-            Column(modifier = Modifier.fillMaxSize(),
+            Column(
+                modifier = Modifier.fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                //Es para el espacio para la imagen del pokemon
                 Spacer(modifier = Modifier.height(70.dp))
 
-                //las pastillas de los tipos
+                // Pastillas de los tipos
                 Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                     TypePill(text = pokemon.type, getColorType(pokemon.type).first)
                 }
-                if (pokemonNumber == pokemonCompanion.number){
-                    Text("⭐ Es tu Compañero",
-                        fontFamily = FontFamily.SansSerif
+
+                // 2. Mostrar letrero cuando SÍ es tu compañero
+                if (isCurrentCompanion) {
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        text = "⭐ Es tu Compañero",
+                        fontFamily = FontFamily.SansSerif,
+                        fontWeight = FontWeight.SemiBold
                     )
                 }
 
                 Spacer(modifier = Modifier.height(20.dp))
 
-                //La parte de las habilidades
-                Row(modifier = Modifier.fillMaxWidth()
-                    .offset(y = (25).dp),
+                // Habilidades y medidas
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .offset(y = 25.dp),
                     horizontalArrangement = Arrangement.SpaceAround
                 ) {
                     Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                         StatItem(
                             label = stringResource(R.string.label_height),
-                            value = pokemon.height.toString() + " m"
+                            value = "${pokemon.height} m"
                         )
                         StatItem(
                             label = stringResource(R.string.label_weight),
-                            value = pokemon.weight.toString() + " kg"
+                            value = "${pokemon.weight} kg"
                         )
                     }
                     Column {
@@ -182,19 +211,20 @@ fun PokemonDetailScreen(
                     fontSize = 25.sp,
                     color = Gray,
                     lineHeight = 22.sp,
-                    modifier = Modifier.padding(horizontal = 12.dp)
-                        .offset(y = (50).dp)
+                    modifier = Modifier
+                        .padding(horizontal = 12.dp)
+                        .offset(y = 50.dp)
                 )
 
                 Spacer(modifier = Modifier.weight(1f))
 
-                //Barra de las flechas con pokemon
-                Row(modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 8.dp),
+                // Barra de navegación (previo / siguiente)
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 8.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    //El boton previo pokemon
                     Row(
                         verticalAlignment = Alignment.Bottom,
                         modifier = Modifier
@@ -216,7 +246,6 @@ fun PokemonDetailScreen(
                         }
                     }
 
-                    //El boton siguiente pokemon
                     Row(
                         verticalAlignment = Alignment.Bottom,
                         modifier = Modifier
@@ -240,6 +269,7 @@ fun PokemonDetailScreen(
                 }
             }
         }
+
         Image(
             painter = painterResource(pokemon.image),
             contentDescription = "${pokemon.name} image",

@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -46,7 +47,8 @@ fun MenuPokedexScreen(
     onLogout: ()-> Unit,
     grid: Boolean,
     onGridChange: (Boolean) -> Unit,
-    onNavigateToProfile: ()-> Unit)
+    onNavigateToProfile: ()-> Unit,
+    onNavigateToAddPokemon: ()-> Unit)
 {
 
     Box(
@@ -75,9 +77,13 @@ fun MenuPokedexScreen(
                     text = "Mis Favoritos",
                     style = MaterialTheme.typography.titleLarge
                 )
+                Button(onClick = onNavigateToAddPokemon) {
+                    Text("+")
+                }
                 OutlinedButton(onClick = onLogout) {
                     Text("Log out")
                 }
+
             }
 
             FavoritesRow(
@@ -163,6 +169,6 @@ fun MenuPokedexScreen(
 @Preview(showBackground = true)
 @Composable
 fun MenuPokedexScreenPreview() {
-    MenuPokedexScreen(PaddingValues(10.dp, 15.dp), {}, {}, {}, true, {}, {})
+    MenuPokedexScreen(PaddingValues(10.dp, 15.dp), {}, {}, {}, true, {}, {}, {})
 }
 

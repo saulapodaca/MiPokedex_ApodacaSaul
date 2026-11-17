@@ -12,9 +12,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import apodaca.saul.mipokedex_compose_apodacasaul.model.data.CompanionPreferences
 import apodaca.saul.mipokedex_compose_apodacasaul.model.data.Users
+import apodaca.saul.mipokedex_compose_apodacasaul.model.data.interfaces.IPokemonDAO
+import apodaca.saul.mipokedex_compose_apodacasaul.model.data.interfaces.IPokemonRepository
+import apodaca.saul.mipokedex_compose_apodacasaul.model.data.sqlite.DatabaseHelper
+import apodaca.saul.mipokedex_compose_apodacasaul.model.data.sqlite.PokemonDAO
+import apodaca.saul.mipokedex_compose_apodacasaul.model.data.sqlite.PokemonSQLRepository
 import apodaca.saul.mipokedex_compose_apodacasaul.model.preferences.ARCHIVO
 import apodaca.saul.mipokedex_compose_apodacasaul.navigation.MyApp
 import apodaca.saul.mipokedex_compose_apodacasaul.ui.theme.MiPokedex_Compose_ApodacaSaulTheme
+import apodaca.saul.mipokedex_compose_apodacasaul.viewmodel.AddPokemonViewModel
 import apodaca.saul.mipokedex_compose_apodacasaul.viewmodel.PokemonDetailViewModel
 import apodaca.saul.mipokedex_compose_apodacasaul.viewmodel.PokemonViewModel
 import apodaca.saul.mipokedex_compose_apodacasaul.viewmodel.UserViewModel
@@ -27,11 +33,15 @@ class MainActivity : ComponentActivity() {
         val userViewModel = UserViewModel(users, companionPreferences)
         val pokemonDetailViewModel = PokemonDetailViewModel(companionPreferences)
         val pokemonViewModel = PokemonViewModel()
+        val helper: DatabaseHelper = DatabaseHelper(this)
+        val pokemonDAO: IPokemonDAO = PokemonDAO(helper)
+        val pokemonRepository: IPokemonRepository = PokemonSQLRepository(pokemonDAO)
+        val addPokemonViewModel = AddPokemonViewModel(pokemonRepository)
         enableEdgeToEdge()
         setContent {
             MiPokedex_Compose_ApodacaSaulTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    MyApp(innerPadding, userViewModel, pokemonDetailViewModel, pokemonViewModel)
+                    MyApp(innerPadding, userViewModel, pokemonDetailViewModel, pokemonViewModel, addPokemonViewModel)
                 }
             }
         }

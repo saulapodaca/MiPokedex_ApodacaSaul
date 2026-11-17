@@ -13,6 +13,7 @@ import java.io.OutputStream
 
 object PokemonSerializer: Serializer<Pokemon>{
     override val defaultValue: Pokemon = Pokemon(
+        id = -1,
         name = "",
         number = -1,
         type = "",

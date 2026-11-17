@@ -10,6 +10,9 @@ object Contract {
         const val COLUMN_NAME_NAME = "name"
         const val COLUMN_NAME_TYPE = "type"
         const val COLUMN_NAME_DESCRIPTION = "description"
-        const val COLUMN_NAME_HEIGHT = "heigh"
+        const val COLUMN_NAME_HEIGHT = "height"
+        const val COLUMN_NAME_WEIGHT = "weight"
+        const val COLUMN_NAME_ABILITY = "ability"
+        const val COLUMN_NAME_IMAGE = "image"
     }
 }

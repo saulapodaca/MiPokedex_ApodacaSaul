@@ -15,3 +15,5 @@ data class PokemonDetail(val pokemon: Int)
 object Login
 @Serializable
 object Profile
+@Serializable
+object AddPokemon

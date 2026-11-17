@@ -4,6 +4,7 @@ import apodaca.saul.mipokedex_compose_apodacasaul.R
 import apodaca.saul.mipokedex_compose_apodacasaul.model.domain.Pokemon
 
 val bulbasaur = Pokemon(
+    1,
     "Bulbasaur",
     1,
     "Grass",
@@ -17,6 +18,7 @@ val bulbasaur = Pokemon(
 
 val pokemonList = listOf(
     Pokemon(
+        1,
         "Bulbasaur",
         1,
         "Grass",
@@ -28,6 +30,7 @@ val pokemonList = listOf(
         R.drawable.bulbasaur
     ),
     Pokemon(
+        2,
         "Charmander",
         4,
         "Fire",
@@ -39,6 +42,7 @@ val pokemonList = listOf(
         R.drawable.charmander
     ),
     Pokemon(
+        3,
         "Squirtle",
         7,
         "Water",
@@ -50,6 +54,7 @@ val pokemonList = listOf(
         R.drawable.squirtle
     ),
     Pokemon(
+        4,
         "Pikachu",
         25,
         "Electric",
@@ -61,6 +66,7 @@ val pokemonList = listOf(
         R.drawable.pikachu
     ),
     Pokemon(
+        5,
         "Jigglypuff",
         39,
         "Normal",
@@ -72,6 +78,7 @@ val pokemonList = listOf(
         R.drawable.jigglypuff
     ),
     Pokemon(
+        6,
         "Gengar",
         94,
         "Ghost",
@@ -83,6 +90,7 @@ val pokemonList = listOf(
         R.drawable.gengar
     ),
     Pokemon(
+        7,
         "Snorlax",
         143,
         "Normal",
@@ -94,6 +102,7 @@ val pokemonList = listOf(
         R.drawable.snorlax
     ),
     Pokemon(
+        8,
         "Mewtwo",
         150,
         "Psych",
@@ -105,6 +114,7 @@ val pokemonList = listOf(
         R.drawable.mewtwo
     ),
     Pokemon(
+        9,
         "Lucario",
         448,
         "Fight",
@@ -116,6 +126,7 @@ val pokemonList = listOf(
         R.drawable.lucario
     ),
     Pokemon(
+        10,
         "Mimikyu",
         778,
         "Ghost",

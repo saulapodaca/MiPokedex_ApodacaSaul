@@ -5,11 +5,13 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import apodaca.saul.mipokedex_compose_apodacasaul.view.screens.AddPokemonScreen
 import apodaca.saul.mipokedex_compose_apodacasaul.view.screens.LoginScreen
 import apodaca.saul.mipokedex_compose_apodacasaul.view.screens.MenuPokedexScreen
 import apodaca.saul.mipokedex_compose_apodacasaul.view.screens.PokemonDetailScreen
 import apodaca.saul.mipokedex_compose_apodacasaul.view.screens.PokemonHuntScreen
 import apodaca.saul.mipokedex_compose_apodacasaul.view.screens.ProfileScreen
+import apodaca.saul.mipokedex_compose_apodacasaul.viewmodel.AddPokemonViewModel
 import apodaca.saul.mipokedex_compose_apodacasaul.viewmodel.PokemonDetailViewModel
 import apodaca.saul.mipokedex_compose_apodacasaul.viewmodel.PokemonViewModel
 import apodaca.saul.mipokedex_compose_apodacasaul.viewmodel.UserViewModel
@@ -17,7 +19,8 @@ import apodaca.saul.mipokedex_compose_apodacasaul.viewmodel.UserViewModel
 @Composable
 fun MyApp(innerPadding: PaddingValues, userViewModel: UserViewModel,
           pokemonDetailViewModel: PokemonDetailViewModel,
-          pokemonViewModel: PokemonViewModel
+          pokemonViewModel: PokemonViewModel,
+          addPokemonViewModel: AddPokemonViewModel
 ) {
     val navController = rememberNavController()
     val navigateToDetail = {id: Int ->navController.navigate(route = PokemonDetail(id))}
@@ -26,6 +29,9 @@ fun MyApp(innerPadding: PaddingValues, userViewModel: UserViewModel,
     }
     val navigateToProfile = {
         navController.navigate(Profile)
+    }
+    val navigateToAddPokemon = {
+        navController.navigate(AddPokemon)
     }
     NavHost(navController, startDestination = Login) {
 
@@ -39,6 +45,7 @@ fun MyApp(innerPadding: PaddingValues, userViewModel: UserViewModel,
                 innerPadding,
                 onNavigateToDetail = { id -> navController.navigate(route = PokemonDetail(id)) },
                 onNavigateToHunt = {navController.navigate(route= PokemonHunt)},
+                onNavigateToAddPokemon = navigateToAddPokemon,
                 onLogout = {
                     userViewModel.logout()
                     navController.navigate(Login){
@@ -50,7 +57,7 @@ fun MyApp(innerPadding: PaddingValues, userViewModel: UserViewModel,
                 },
                 grid = userViewModel.grid,
                 onGridChange = { userViewModel.changePokemonDisplay(it) },
-                navigateToProfile
+                onNavigateToProfile = navigateToProfile
                 )
         }
 
@@ -60,6 +67,10 @@ fun MyApp(innerPadding: PaddingValues, userViewModel: UserViewModel,
 
         composable<Profile> {
             ProfileScreen(innerPadding, userViewModel)
+        }
+
+        composable<AddPokemon> {
+            AddPokemonScreen(innerPadding, addPokemonViewModel)
         }
 
         //Pantalla del detalle
@@ -80,7 +91,8 @@ fun MyApp(innerPadding: PaddingValues, userViewModel: UserViewModel,
                     }
                 },
                 pokemonDetailViewModel,
-                pokemonViewModel
+                pokemonViewModel,
+                userViewModel
 
             )
         }

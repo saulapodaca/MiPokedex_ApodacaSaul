@@ -1,10 +1,12 @@
 package apodaca.saul.mipokedex_compose_apodacasaul.model.domain
 
+import apodaca.saul.mipokedex_compose_apodacasaul.R
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Serializer
 
 @Serializable
 data class Pokemon(
+    val id: Int = -1,
     val name: String,
     val number: Int,
     val type: String,
@@ -13,7 +15,7 @@ data class Pokemon(
     val weight: Float,
     var favorite: Boolean,
     val ability: String,
-    val image: Int
+    val image: Int = R.drawable.wtp
 ) {
     companion object {
     }
