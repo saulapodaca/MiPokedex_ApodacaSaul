@@ -3,6 +3,7 @@ package apodaca.saul.mipokedex_compose_apodacasaul.view.screens
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -18,6 +19,7 @@ import androidx.compose.material3.ExposedDropdownMenuAnchorType
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -36,6 +38,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import apodaca.saul.mipokedex_compose_apodacasaul.model.domain.pokemonTypes
 import apodaca.saul.mipokedex_compose_apodacasaul.ui.theme.Typography
+import apodaca.saul.mipokedex_compose_apodacasaul.view.components.PokemonRow
 import apodaca.saul.mipokedex_compose_apodacasaul.viewmodel.AddPokemonViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -44,7 +47,6 @@ fun AddPokemonScreen(
     innerPadding: PaddingValues,
     addPokemonViewModel: AddPokemonViewModel = viewModel()
 ) {
-    // 1. Colectamos el flujo de pokemones como estado
     val pokemonList by addPokemonViewModel.pokemons.collectAsStateWithLifecycle()
 
     val number = rememberTextFieldState()
@@ -54,6 +56,7 @@ fun AddPokemonScreen(
     val height = rememberTextFieldState()
     val weight = rememberTextFieldState()
     val ability = rememberTextFieldState()
+    var favorite by remember {mutableStateOf(false)}
     var openType by remember { mutableStateOf(false) }
 
     Column(
@@ -103,7 +106,6 @@ fun AddPokemonScreen(
                 pokemonTypes.forEach { selectedOption ->
                     DropdownMenuItem(
                         onClick = {
-                            // Actualizamos el mismo state 'type' que usa el OutlinedTextField
                             type.setTextAndPlaceCursorAtEnd(selectedOption)
                             openType = false
                         },
@@ -137,6 +139,11 @@ fun AddPokemonScreen(
             modifier = Modifier.fillMaxWidth()
         )
 
+        Row() {
+            Text("Favorito:")
+            Switch(favorite, {favorite = it})
+        }
+
         Button(
             onClick = {
                 addPokemonViewModel.savePokemon(
@@ -164,10 +171,7 @@ fun AddPokemonScreen(
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             items(pokemonList) { pokemon ->
-                Text(
-                    text = pokemon.toString(),
-                    modifier = Modifier.padding(4.dp)
-                )
+                PokemonRow(pokemon) { }
             }
         }
     }

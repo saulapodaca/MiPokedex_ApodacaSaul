@@ -14,7 +14,8 @@ data class Pokemon(
     val weight: Float,
     var favorite: Boolean,
     val ability: String,
-    val image: Int = R.drawable.wtp
+    val image: Int = R.drawable.wtp,
+    var sqlImage: ByteArray? = null
 ) {
     companion object {
     }

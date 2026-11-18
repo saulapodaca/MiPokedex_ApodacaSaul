@@ -2,6 +2,7 @@ package apodaca.saul.mipokedex_compose_apodacasaul.model.data.sqlite
 
 import android.content.ContentValues
 import android.database.Cursor
+import apodaca.saul.mipokedex_compose_apodacasaul.R
 import apodaca.saul.mipokedex_compose_apodacasaul.model.domain.Pokemon
 
 class PokemonMapper {
@@ -15,7 +16,8 @@ class PokemonMapper {
         val height = cursor.getFloat(cursor.getColumnIndexOrThrow(Contract.Pokemons.COLUMN_NAME_HEIGHT))
         val weight = cursor.getFloat(cursor.getColumnIndexOrThrow(Contract.Pokemons.COLUMN_NAME_WEIGHT))
         val ability = cursor.getString(cursor.getColumnIndexOrThrow(Contract.Pokemons.COLUMN_NAME_ABILITY))
-        val image = cursor.getInt(cursor.getColumnIndexOrThrow(Contract.Pokemons.COLUMN_NAME_IMAGE))
+        val image = cursor.getBlob(cursor.getColumnIndexOrThrow(Contract.Pokemons.COLUMN_NAME_IMAGE))
+        val fav = cursor.getInt(cursor.getColumnIndexOrThrow(Contract.Pokemons.COLUMN_NAME_FAVORITE))
 
         return Pokemon(
             id = id,
@@ -26,14 +28,14 @@ class PokemonMapper {
             height = height,
             weight = weight,
             ability = ability,
-            favorite = false,
-            image = image
+            favorite = fav != 0,
+            image = R.drawable.wtp,
+            sqlImage = image
         )
     }
 
     fun getContentValues(pokemon: Pokemon): ContentValues{
         val values = ContentValues().apply {
-            // We omit COLUMN_ID so SQLite can auto-increment/generate it
             put(Contract.Pokemons.COLUMN_NAME_NUMBER, pokemon.number)
             put(Contract.Pokemons.COLUMN_NAME_NAME, pokemon.name)
             put(Contract.Pokemons.COLUMN_NAME_TYPE, pokemon.type)
@@ -42,6 +44,7 @@ class PokemonMapper {
             put(Contract.Pokemons.COLUMN_NAME_WEIGHT, pokemon.weight)
             put(Contract.Pokemons.COLUMN_NAME_ABILITY, pokemon.ability)
             put(Contract.Pokemons.COLUMN_NAME_IMAGE, pokemon.image)
+            put(Contract.Pokemons.COLUMN_NAME_FAVORITE, pokemon.favorite)
         }
         return values
     }
